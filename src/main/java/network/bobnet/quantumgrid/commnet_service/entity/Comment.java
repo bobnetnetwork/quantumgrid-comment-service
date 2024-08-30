@@ -36,6 +36,9 @@ public class Comment {
     @ToString.Include
     private String content;
 
+    @Column(name = "parent_id")
+    private Long parentId;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

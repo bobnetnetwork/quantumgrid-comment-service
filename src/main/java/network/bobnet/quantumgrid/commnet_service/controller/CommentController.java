@@ -16,6 +16,8 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/comments")
@@ -57,5 +59,17 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{parentId}/reply")
+    public ResponseEntity<Comment> replyToComment(@PathVariable Long parentId, @RequestBody Comment reply) {
+        Comment createdReply = commentService.replyToComment(parentId, reply);
+        return ResponseEntity.ok(createdReply);
+    }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<Comment>> getCommentsByPost(@PathVariable Long postId) {
+        List<Comment> comments = commentService.getCommentsByPost(postId);
+        return ResponseEntity.ok(comments);
     }
 }
