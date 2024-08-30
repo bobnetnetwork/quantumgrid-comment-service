@@ -23,17 +23,19 @@ public class Comment {
     private Long id;
 
     @Column(name = "post_id", nullable = false)
+    @ToString.Include
     private Long postId;
 
     @Column(name = "author_id", nullable = false)
+    @ToString.Include
     private Long authorId;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
+    @ToString.Include
     private CommentStatusEnum status;
 
     @Column(name = "content", nullable = false)
-    @ToString.Include
     private String content;
 
     @Column(name = "parent_id")
@@ -50,4 +52,14 @@ public class Comment {
 
     @Column(name = "updated_by")
     private Long updatedBy;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
